@@ -218,3 +218,72 @@ export function* quickSortGen(arr) {
     piRef.val = i + 1;
   }
 }
+
+// 6. Heap Sort
+export function* heapSortGen(arr) {
+  const a = [...arr];
+  const n = a.length;
+
+  function* heapify(heapSize, rootIndex) {
+    let largest = rootIndex;
+    const left = 2 * rootIndex + 1;
+    const right = 2 * rootIndex + 2;
+
+    yield {
+      array: [...a],
+      comparisons: 0,
+      swaps: 0,
+      currentIndices: { active: rootIndex, heapSize },
+    };
+
+    if (left < heapSize) {
+      yield {
+        array: [...a],
+        comparisons: 1,
+        swaps: 0,
+        currentIndices: { comparing: [largest, left], active: rootIndex, heapSize },
+      };
+      if (a[left] > a[largest]) {
+        largest = left;
+      }
+    }
+
+    if (right < heapSize) {
+      yield {
+        array: [...a],
+        comparisons: 1,
+        swaps: 0,
+        currentIndices: { comparing: [largest, right], active: rootIndex, heapSize },
+      };
+      if (a[right] > a[largest]) {
+        largest = right;
+      }
+    }
+
+    if (largest !== rootIndex) {
+      [a[rootIndex], a[largest]] = [a[largest], a[rootIndex]];
+      yield {
+        array: [...a],
+        comparisons: 0,
+        swaps: 1,
+        currentIndices: { swapping: [rootIndex, largest], active: largest, heapSize },
+      };
+      yield* heapify(heapSize, largest);
+    }
+  }
+
+  for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
+    yield* heapify(n, i);
+  }
+
+  for (let end = n - 1; end > 0; end--) {
+    [a[0], a[end]] = [a[end], a[0]];
+    yield {
+      array: [...a],
+      comparisons: 0,
+      swaps: 1,
+      currentIndices: { swapping: [0, end], heapSize: end, sortedStart: end },
+    };
+    yield* heapify(end, 0);
+  }
+}

@@ -8,6 +8,7 @@ import {
   insertionSortGen,
   mergeSortGen,
   quickSortGen,
+  heapSortGen,
 } from "@/utils/sortingGenerators";
 
 const ALGORITHMS = {
@@ -16,6 +17,7 @@ const ALGORITHMS = {
   insertion: { name: "Insertion Sort", gen: insertionSortGen, complexity: "O(N²)" },
   merge: { name: "Merge Sort", gen: mergeSortGen, complexity: "O(N log N)" },
   quick: { name: "Quick Sort", gen: quickSortGen, complexity: "O(N log N)" },
+  heap: { name: "Heap Sort", gen: heapSortGen, complexity: "O(N log N)" },
 };
 
 const getFontSize = (value) => {
@@ -99,6 +101,19 @@ const getBarStyles = (index, value, algoKey, currentIndices, isCompleted, maxVal
         bgClass = "bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 border-rose-400 dark:border-rose-700";
       } else if (index === boundary) {
         bgClass = "bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 border-purple-400 dark:border-purple-700";
+      }
+      break;
+    case "heap":
+      if (swapping.includes(index)) {
+        bgClass = "bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 border-rose-400 dark:border-rose-700";
+      } else if (comparing.includes(index)) {
+        bgClass = "bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 border-amber-400 dark:border-amber-700";
+      } else if (index === active) {
+        bgClass = "bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 border-purple-400 dark:border-purple-700";
+      } else if (currentIndices.sortedStart !== undefined && index >= currentIndices.sortedStart) {
+        bgClass = "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900";
+      } else if (currentIndices.heapSize !== undefined && index >= currentIndices.heapSize) {
+        bgClass = "bg-slate-100 dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-300 dark:border-slate-700";
       }
       break;
     default:
