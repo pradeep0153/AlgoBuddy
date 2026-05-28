@@ -62,6 +62,8 @@ export default function Page() {
             { text: "Insertion Sort", url: "/visualizer/sorting/insertionsort" },
             { text: "Merge Sort", url: "/visualizer/sorting/mergesort" },
             { text: "Quick Sort", url: "/visualizer/sorting/quicksort" },
+            { text: "Heap Sort", url: "/visualizer/sorting/heapsort" },
+            { text: "Comparison Mode", url: "/visualizer/sorting/comparison" },
           ]}
         />
       }

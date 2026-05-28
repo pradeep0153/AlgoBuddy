@@ -8,7 +8,7 @@ import ExploreOther from "@/app/components/ui/exploreOther";
 export const metadata = {
   title: "Sorting Algorithm Comparison Mode | Side-by-Side Visualizer",
   description:
-    "Compare Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, and Quick Sort side-by-side on AlgoBuddy. Watch synchronous animations on identical datasets and compare comparisons, swaps, and time in real-time.",
+    "Compare Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Quick Sort, and Heap Sort side-by-side on AlgoBuddy. Watch synchronous animations on identical datasets and compare comparisons, swaps, and time in real-time.",
   keywords: [
     "algorithm comparison",
     "sorting visualizer",
@@ -46,6 +46,7 @@ export default function ComparisonPage() {
             { text: "Insertion Sort", url: "/visualizer/sorting/insertionsort" },
             { text: "Merge Sort", url: "/visualizer/sorting/mergesort" },
             { text: "Quick Sort", url: "/visualizer/sorting/quicksort" },
+            { text: "Heap Sort", url: "/visualizer/sorting/heapsort" },
           ]}
         />
       }
