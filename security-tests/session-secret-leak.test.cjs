@@ -8,6 +8,7 @@
 
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const crypto = require("node:crypto");
 const path = require("node:path");
 const { pathToFileURL } = require("node:url");
 
@@ -17,6 +18,10 @@ const storeUrl = pathToFileURL(
 
 async function loadStore() {
   return import(storeUrl);
+}
+
+function legacySha256(password) {
+  return crypto.createHash("sha256").update(String(password)).digest("hex");
 }
 
 test("getPublicCollaborationSession strips sessionSecret from public session", async () => {
@@ -140,6 +145,7 @@ test("getCollaborationSession (internal) retains all fields including sessionSec
 test("joinCollaborationSession for private session requires correct password", async () => {
   const {
     createCollaborationSession,
+    getCollaborationSession,
     joinCollaborationSession,
   } = await loadStore();
 
@@ -148,6 +154,24 @@ test("joinCollaborationSession for private session requires correct password", a
     visibility: "private",
     password: "correct-password",
   });
+
+  const stored = await getCollaborationSession(session.id);
+  assert.equal(
+    stored.passwordHash?.algorithm,
+    "bcrypt",
+    "new private sessions must use bcrypt password hashes",
+  );
+  assert.equal(
+    stored.passwordHash?.workFactor,
+    12,
+    "bcrypt password metadata must include the configured work factor",
+  );
+  assert.ok(stored.passwordHash?.salt, "bcrypt password metadata must include the per-session salt");
+  assert.notEqual(
+    stored.passwordHash?.hash,
+    legacySha256("correct-password"),
+    "private session passwords must not be stored as unsalted SHA-256",
+  );
 
   const denied = await joinCollaborationSession(session.id, { password: "wrong" });
   assert.equal(denied.status, 403, "wrong password must be rejected with 403");
@@ -160,6 +184,41 @@ test("joinCollaborationSession for private session requires correct password", a
     granted.session?.passwordHash,
     undefined,
     "granted join must not expose passwordHash in session view",
+  );
+});
+
+test("joinCollaborationSession migrates legacy SHA-256 password hashes after successful join", async () => {
+  const {
+    createCollaborationSession,
+    getCollaborationSession,
+    joinCollaborationSession,
+  } = await loadStore();
+
+  const { session } = await createCollaborationSession({
+    title: "Legacy migration test",
+    visibility: "private",
+    password: "legacy-password",
+  });
+
+  const internal = await getCollaborationSession(session.id);
+  internal.passwordHash = legacySha256("legacy-password");
+
+  const denied = await joinCollaborationSession(session.id, { password: "wrong-password" });
+  assert.equal(denied.status, 403, "wrong legacy password must still be rejected");
+
+  const granted = await joinCollaborationSession(session.id, { password: "legacy-password" });
+  assert.ok(!granted.error, "correct legacy password must be accepted during migration");
+
+  const migrated = await getCollaborationSession(session.id);
+  assert.equal(
+    migrated.passwordHash?.algorithm,
+    "bcrypt",
+    "legacy SHA-256 hashes must be upgraded to bcrypt after successful verification",
+  );
+  assert.notEqual(
+    migrated.passwordHash?.hash,
+    legacySha256("legacy-password"),
+    "migrated password hash must not remain unsalted SHA-256",
   );
 });
 

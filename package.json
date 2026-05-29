@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint app lib utils --max-warnings=0",
     "test": "npm run lint && npm run test:security",
-    "test:security": "node --test security-tests/linkedlist-xss.test.cjs",
+    "test:security": "node --test security-tests/*.test.cjs",
     "postbuild": "next-sitemap"
   },
   "dependencies": {
@@ -25,6 +25,7 @@
     "@upstash/redis": "^1.38.0",
     "@vercel/speed-insights": "^1.2.0",
     "axios": "^1.9.0",
+    "bcryptjs": "^3.0.3",
     "dotenv": "^16.5.0",
     "framer-motion": "^12.9.4",
     "gsap": "^3.13.0",
