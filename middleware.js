@@ -71,5 +71,6 @@ export const config = {
   matcher: [
     // Run on all routes except Next.js internals and static file extensions.
     "/((?!_next/static|_next/image|favicon\\.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    
   ],
 };
