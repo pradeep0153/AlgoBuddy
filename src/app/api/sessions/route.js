@@ -1,3 +1,4 @@
+import { getAuthenticatedUser } from "@/lib/auth";
 import {
   createCollaborationSession,
   listCollaborationSessions,
@@ -5,7 +6,7 @@ import {
 } from "@/lib/collaboration/sessionStore";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { getClientIp } from "@/lib/getClientIp";
-import { getAuthenticatedUser, jsonResponse, errorResponse } from "@/lib/serverApi";
+import { jsonResponse, errorResponse } from "@/lib/serverApi";
 
 export async function GET(request) {
   try {
@@ -39,15 +40,16 @@ export async function POST(request) {
     if (!validateCsrfOrigin(request)) {
       return jsonResponse({ error: "CSRF validation failed" }, 403);
     }
-    const { user, configured } = await getAuthenticatedUser();
-    
-    if (process.env.NODE_ENV === "production" && !configured) {
-      return jsonResponse({ error: "Server misconfigured: Authentication environment variables are missing." }, 500);
-    }
+    const authResult = await getAuthenticatedUser();
 
-    if (configured && !user) {
+    if (!authResult.success) {
+      if (authResult.type === "CONFIG_ERROR" || authResult.type === "AUTH_PROVIDER_ERROR") {
+        return jsonResponse({ error: "Authentication service unavailable" }, 500);
+      }
       return jsonResponse({ error: "Authentication required" }, 401);
     }
+
+    const user = authResult.user;
 
     const ip = getClientIp(request.headers);
     const { allowed } = await checkRateLimit(`collab:create:${ip}`);
@@ -76,7 +78,7 @@ export async function POST(request) {
 
     return jsonResponse({
       session: result.session,
-      ...(configured ? { sessionSecret: result.sessionSecret } : {}),
+      sessionSecret: result.sessionSecret,
       joinUrl: `/visualizer/dry-run?session=${result.session.joinCode}`,
     });
   } catch (error) {

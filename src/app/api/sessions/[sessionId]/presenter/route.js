@@ -1,7 +1,8 @@
+import { getAuthenticatedUser } from "@/lib/auth";
 import { claimSessionPresenter, validateCsrfOrigin } from "@/lib/collaboration/sessionStore";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { getClientIp } from "@/lib/getClientIp";
-import { getAuthenticatedUser, jsonResponse, errorResponse } from "@/lib/serverApi";
+import { jsonResponse, errorResponse } from "@/lib/serverApi";
 
 export async function POST(request, { params }) {
   try {
@@ -9,10 +10,15 @@ export async function POST(request, { params }) {
       return jsonResponse({ error: "CSRF validation failed" }, 403);
     }
 
-    const { user, configured } = await getAuthenticatedUser();
-    if (configured && !user) {
+    const authResult = await getAuthenticatedUser();
+    if (!authResult.success) {
+      if (authResult.type === "CONFIG_ERROR" || authResult.type === "AUTH_PROVIDER_ERROR") {
+        return jsonResponse({ error: "Authentication service unavailable" }, 500);
+      }
       return jsonResponse({ error: "Authentication required" }, 401);
     }
+
+    const user = authResult.user;
 
     const ip = getClientIp(request.headers);
     const { allowed } = await checkRateLimit(`collab:presenter:${ip}:${params.sessionId}`);
@@ -22,7 +28,7 @@ export async function POST(request, { params }) {
 
     const body = await request.json().catch(() => ({}));
     const result = await claimSessionPresenter(params.sessionId, {
-      userId: configured ? user?.id || "" : body.presenterId || "anonymous",
+      userId: user.id,
       sessionSecret: body.sessionSecret,
     });
 

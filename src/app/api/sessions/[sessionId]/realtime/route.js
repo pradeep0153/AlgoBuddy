@@ -1,14 +1,20 @@
+import { getAuthenticatedUser } from "@/lib/auth";
 import { exchangeRealtimeSubscriptionToken } from "@/lib/collaboration/sessionStore";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { getClientIp } from "@/lib/getClientIp";
-import { getAuthenticatedUser, jsonResponse, errorResponse } from "@/lib/serverApi";
+import { jsonResponse, errorResponse } from "@/lib/serverApi";
 
 export async function POST(request, { params }) {
   try {
-    const { user, configured } = await getAuthenticatedUser();
-    if (configured && !user) {
+    const authResult = await getAuthenticatedUser();
+    if (!authResult.success) {
+      if (authResult.type === "CONFIG_ERROR" || authResult.type === "AUTH_PROVIDER_ERROR") {
+        return jsonResponse({ error: "Authentication service unavailable" }, 500);
+      }
       return jsonResponse({ error: "Authentication required" }, 401);
     }
+
+    const user = authResult.user;
 
     const ip = getClientIp(request.headers);
     const { allowed } = await checkRateLimit(`collab:realtime:${ip}:${params.sessionId}`);
@@ -19,7 +25,7 @@ export async function POST(request, { params }) {
     const body = await request.json().catch(() => ({}));
     const result = await exchangeRealtimeSubscriptionToken(params.sessionId, {
       subscriptionToken: body.subscriptionToken,
-      userId: configured ? user?.id || "" : body.createdBy || "anonymous",
+      userId: user.id,
     });
 
     if (result.error) {

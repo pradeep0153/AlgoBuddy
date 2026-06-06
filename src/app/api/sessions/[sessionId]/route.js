@@ -1,3 +1,4 @@
+import { getAuthenticatedUser } from "@/lib/auth";
 import {
   getPublicCollaborationSession,
   joinCollaborationSession,
@@ -5,13 +6,16 @@ import {
 } from "@/lib/collaboration/sessionStore";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { getClientIp } from "@/lib/getClientIp";
-import { getAuthenticatedUser, jsonResponse, errorResponse } from "@/lib/serverApi";
+import { jsonResponse, errorResponse } from "@/lib/serverApi";
 
 export async function GET(request, { params }) {
   try {
-    const { user, configured } = await getAuthenticatedUser();
+    const authResult = await getAuthenticatedUser();
 
-    if (configured && !user) {
+    if (!authResult.success) {
+      if (authResult.type === "CONFIG_ERROR" || authResult.type === "AUTH_PROVIDER_ERROR") {
+        return jsonResponse({ error: "Authentication service unavailable" }, 500);
+      }
       return jsonResponse({ error: "Authentication required" }, 401);
     }
 
@@ -21,7 +25,7 @@ export async function GET(request, { params }) {
     if (!allowed) {
       return jsonResponse({ error: "Too many session lookup requests. Please try again shortly." }, 429);
     }
-  
+
     const session = await getPublicCollaborationSession(params.sessionId);
 
     if (!session) {
@@ -40,10 +44,15 @@ export async function POST(request, { params }) {
       return jsonResponse({ error: "CSRF validation failed" }, 403);
     }
 
-    const { user, configured } = await getAuthenticatedUser();
-    if (configured && !user) {
+    const authResult = await getAuthenticatedUser();
+    if (!authResult.success) {
+      if (authResult.type === "CONFIG_ERROR" || authResult.type === "AUTH_PROVIDER_ERROR") {
+        return jsonResponse({ error: "Authentication service unavailable" }, 500);
+      }
       return jsonResponse({ error: "Authentication required" }, 401);
     }
+
+    const user = authResult.user;
 
     const ip = getClientIp(request.headers);
     const { allowed } = await checkRateLimit(`collab:join:${ip}:${params.sessionId}`);
@@ -54,7 +63,7 @@ export async function POST(request, { params }) {
     const body = await request.json().catch(() => ({}));
     const result = await joinCollaborationSession(params.sessionId, {
       password: body.password,
-      userId: configured ? user?.id || "" : body.createdBy || "anonymous",
+      userId: user.id,
     });
 
     if (result.error) {

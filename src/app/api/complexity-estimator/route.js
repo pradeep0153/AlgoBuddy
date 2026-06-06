@@ -1,6 +1,7 @@
 import { checkRateLimit } from "@/lib/rateLimit";
 import { getClientIp } from "@/lib/getClientIp";
-import { getAuthenticatedUser, jsonResponse, errorResponse } from "@/lib/serverApi";
+import { getAuthenticatedUser } from "@/lib/auth";
+import { jsonResponse, errorResponse } from "@/lib/serverApi";
 
 const SYSTEM_PROMPT = `You are an expert computer science assistant specialized in algorithmic analysis and DSA. Your task is to analyze the given code snippet for Time Complexity (Best, Average, and Worst cases using Big-O, Big-Theta, or Big-Omega notation) and Space Complexity. Additionally, if the code is sub-optimal (e.g., O(n^2) nested loops that can be optimized to O(n) using a hash map or sorting), provide a refactored version of the code in the same language along with a brief explanation of the optimization.
 
@@ -47,14 +48,13 @@ export async function POST(req) {
     }
 
     // 3. Authentication Check
-    const { user, configured } = await getAuthenticatedUser();
-    
-    if (process.env.NODE_ENV === "production" && !configured) {
-      return jsonResponse({ error: "Server misconfigured: Authentication environment variables are missing." }, 500);
-    }
-    
-    if (configured && !user) {
-      return jsonResponse({ error: "Authentication required." }, 401);
+    const authResult = await getAuthenticatedUser();
+
+    if (!authResult.success) {
+      if (authResult.type === "CONFIG_ERROR" || authResult.type === "AUTH_PROVIDER_ERROR") {
+        return jsonResponse({ error: "Authentication service unavailable" }, 500);
+      }
+      return jsonResponse({ error: "Authentication required" }, 401);
     }
 
     // 4. Gemini API Integration
