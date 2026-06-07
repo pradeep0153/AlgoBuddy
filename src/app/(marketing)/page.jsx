@@ -1,57 +1,17 @@
-import Hero from "@/app/components/hero";
-import ConceptsSection from "@/app/components/ConceptsSection";
-import PersonalizedSection from "@/app/components/PersonalizedSection";
+import AboutSection from "@/app/components/about";
 import Footer from "@/app/components/footer";
-import BottomAd from "@/app/components/ads/bottom";
-import BackToTop from "@/app/components/ui/backtotop";
 
 export const metadata = {
-  title: "AlgoBuddy | Visualize & Learn DSA the Smart Way",
+  title: "About | AlgoBuddy",
   description:
-    "Master Data Structures and Algorithms with interactive visualizations. Perfect for students, beginners, and interview prep. Visualize Stack, Queue, Tree, Graph, Sorting & more.",
-  keywords: [
-    "DSA Visualizer",
-    "Algorithm Visualizer",
-    "Learn DSA",
-    "Practice DSA Problems",
-    "DSA Quizzes",
-    "Interactive DSA",
-    "Sorting Algorithms",
-    "Searching Algorithms",
-    "Stack",
-    "Queue",
-    "Tree",
-    "Linked List",
-    "Heap Sort",
-    "Tree Traversal",
-    "Linear Search",
-    "Bubble Sort",
-    "Singly Linked List",
-    "Doubly Linked List",
-    "Circular Linked List",
-    "Data Structures for Beginners",
-    "DSA Practice Platform",
-    "Quiz for DSA",
-    "Algorithm Quiz",
-    "Interactive Algorithm Quiz",
-    "Learn DSA with Quizzes",
-  ],
-  robots: "index, follow",
+    "Learn about AlgoBuddy — the interactive DSA visualization platform built to bridge the gap between theory and practical understanding.",
 };
 
-export default function Home() {
+export default function AboutPage() {
   return (
     <>
-      <div className="landing-page visualizer-page min-h-screen bg-surface-50 dark:bg-surface-900">
-        <div id="hero">
-          <Hero />
-        </div>
-        <PersonalizedSection />
-        <ConceptsSection />
-        <BackToTop />
-        <Footer />
-      </div>
+      <AboutSection />
+      <Footer />
     </>
   );
 }
-
