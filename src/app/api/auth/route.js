@@ -101,6 +101,17 @@ async function recordLoginFailure(email) {
   }
 
   const now = Date.now();
+  
+  // --- Memory Leak Fix: Probabilistic Garbage Collection ---
+  if (Math.random() < 0.05) {
+    for (const [k, until] of memoryLockouts.entries()) {
+      if (until <= now) memoryLockouts.delete(k);
+    }
+    for (const [k, bucket] of memoryFailures.entries()) {
+      if (bucket.resetAt <= now) memoryFailures.delete(k);
+    }
+  }
+
   const bucket = memoryFailures.get(email);
   if (!bucket || bucket.resetAt <= now) {
     memoryFailures.set(email, { count: 1, resetAt: now + LOGIN_FAILURE_WINDOW_SECONDS * 1000 });

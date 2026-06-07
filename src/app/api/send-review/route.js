@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import { checkRateLimit } from "@/lib/rateLimit";
+import { checkRateLimit, checkGlobalSmtpQuota } from "@/lib/rateLimit";
 import { getClientIp } from "@/lib/getClientIp";
 import { verifyTurnstile } from "@/lib/verifyTurnstile";
 import { jsonResponse, errorResponse } from "@/lib/serverApi";

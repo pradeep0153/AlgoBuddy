@@ -174,6 +174,9 @@ const Footer = () => {
                 <Link href="/roadmaps" className={footerLink}>
                   Roadmaps
                 </Link>
+                <Link href="/recently-viewed" className={footerLink}>
+                  Recently Viewed
+                </Link>
                 <Link href="/blog" className={footerLink}>
                   Blog
                 </Link>

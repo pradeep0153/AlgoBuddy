@@ -377,6 +377,9 @@ export default function DryRunClient() {
   const collaborationRef = useRef(null);
   const followPresenterRef = useRef(followPresenter);
   const lastReceivedHashRef = useRef("");
+  const editorRef = useRef(null);
+  const monacoRef = useRef(null);
+  const decorationsRef = useRef([]);
 
   useEffect(() => {
     followPresenterRef.current = followPresenter;
@@ -452,7 +455,74 @@ export default function DryRunClient() {
   useEffect(() => {
     setStep(0);
     setPlaying(false);
+    // Clear editor decorations when source or language changes
+    if (editorRef.current) {
+      decorationsRef.current = editorRef.current.deltaDecorations(
+        decorationsRef.current,
+        []
+      );
+    }
   }, [source, language]);
+
+  // Inject CSS styles for the active line highlight in Monaco Editor
+  useEffect(() => {
+    const styleId = "dry-run-active-line-styles";
+    if (document.getElementById(styleId)) return;
+    const style = document.createElement("style");
+    style.id = styleId;
+    style.textContent = `
+      .active-line-highlight {
+        background: rgba(139, 92, 246, 0.18) !important;
+        border-left: 3px solid #8b5cf6 !important;
+        transition: background 0.3s ease;
+      }
+      .dark .active-line-highlight,
+      [data-theme="dark"] .active-line-highlight {
+        background: rgba(139, 92, 246, 0.25) !important;
+      }
+      .active-line-glyph {
+        background: #8b5cf6;
+        border-radius: 50%;
+        margin-left: 4px;
+        width: 8px !important;
+        height: 8px !important;
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      const existing = document.getElementById(styleId);
+      if (existing) existing.remove();
+    };
+  }, []);
+
+  // Sync Monaco Editor decorations with the current execution step
+  useEffect(() => {
+    const editor = editorRef.current;
+    const monacoInstance = monacoRef.current;
+    if (!editor || !monacoInstance || !current.lineNumber) return;
+
+    decorationsRef.current = editor.deltaDecorations(
+      decorationsRef.current,
+      [
+        {
+          range: new monacoInstance.Range(
+            current.lineNumber,
+            1,
+            current.lineNumber,
+            1
+          ),
+          options: {
+            isWholeLine: true,
+            className: "active-line-highlight",
+            glyphMarginClassName: "active-line-glyph",
+          },
+        },
+      ]
+    );
+
+    // Scroll the editor to reveal the active line
+    editor.revealLineInCenter(current.lineNumber);
+  }, [current.lineNumber]);
 
   const isAtEnd = step >= trace.length - 1;
 
@@ -695,6 +765,10 @@ export default function DryRunClient() {
               theme={isDarkMode ? "vs-dark" : "light"}
               value={source}
               onChange={(value) => setSource(value || "")}
+              onMount={(editor, monaco) => {
+                editorRef.current = editor;
+                monacoRef.current = monaco;
+              }}
               loading={
                 <div className="flex h-[420px] items-center justify-center bg-slate-950 font-mono text-sm text-slate-400">
                   Loading Editor...
@@ -710,6 +784,7 @@ export default function DryRunClient() {
                 automaticLayout: true,
                 cursorBlinking: "smooth",
                 renderLineHighlight: "all",
+                glyphMargin: true,
               }}
             />
           </div>
