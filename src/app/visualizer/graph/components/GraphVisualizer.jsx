@@ -21,11 +21,12 @@ import AdjacencyPanel from "@/app/components/models/AdjacencyPanel";
 import PlaybackControls from "@/app/components/ui/PlaybackControls";
 import useVisualizerKeyboard from "@/app/hooks/useVisualizerKeyboard";
 import { CustomInputPanel } from "@/app/visualizer/components/CustomInputPanel";
+import { bfsGenerator } from "@/features/algorithms/graph/bfsLogic";
+import { dfsGenerator } from "@/features/algorithms/graph/dfsLogic";
+import { dijkstraGenerator } from "@/features/algorithms/graph/dijkstraLogic";
+import { bellmanFordGenerator } from "@/features/algorithms/graph/bellmanFordLogic";
+import { floydWarshallGenerator } from "@/features/algorithms/graph/floydWarshallLogic";
 import { 
-  bfsFrames, 
-  dfsFrames, 
-  dijkstraFrames, 
-  floydWarshallFrames,
   primFrames, 
   kruskalFrames, 
   topologicalSortFrames,
@@ -33,8 +34,8 @@ import {
   adjacencyMatrixFrames
 } from "../utils/algorithms";
 
-const weightedAlgorithms = new Set(["dijkstra", "floyd-warshall", "prim", "kruskal"]);
-const directedAlgorithms = new Set(["dijkstra", "floyd-warshall", "topological-sort"]);
+const weightedAlgorithms = new Set(["dijkstra", "bellman-ford", "floyd-warshall", "prim", "kruskal"]);
+const directedAlgorithms = new Set(["dijkstra", "bellman-ford", "floyd-warshall", "topological-sort"]);
 
 const defaultGraphs = {
   bfs: {
@@ -110,6 +111,28 @@ const defaultGraphs = {
       { from: "3", to: "2", weight: 2, directed: true },
       { from: "3", to: "4", weight: 7, directed: true },
       { from: "4", to: "0", weight: 4, directed: true },
+    ]
+  },
+  "bellman-ford": {
+    nodes: [
+      { id: "0", x: 100, y: 250, label: "A" },
+      { id: "1", x: 300, y: 100, label: "B" },
+      { id: "2", x: 300, y: 400, label: "C" },
+      { id: "3", x: 500, y: 100, label: "D" },
+      { id: "4", x: 500, y: 400, label: "E" },
+      { id: "5", x: 700, y: 250, label: "F" },
+    ],
+    edges: [
+      { from: "0", to: "1", weight: 4, directed: true },
+      { from: "0", to: "2", weight: 2, directed: true },
+      { from: "1", to: "3", weight: 5, directed: true },
+      { from: "1", to: "2", weight: 1, directed: true },
+      { from: "2", to: "1", weight: 8, directed: true },
+      { from: "2", to: "3", weight: 10, directed: true },
+      { from: "2", to: "4", weight: 3, directed: true },
+      { from: "3", to: "5", weight: 2, directed: true },
+      { from: "4", to: "3", weight: -4, directed: true },
+      { from: "4", to: "5", weight: 6, directed: true },
     ]
   },
   prim: {
@@ -213,6 +236,10 @@ const complexityData = {
     { name: 'Time', value: 100, label: 'O(V^3)', full: 'Time Complexity' },
     { name: 'Space', value: 90, label: 'O(V^2)', full: 'Space Complexity' },
   ],
+  "bellman-ford": [
+    { name: 'Time', value: 90, label: 'O(VE)', full: 'Time Complexity' },
+    { name: 'Space', value: 60, label: 'O(V)', full: 'Space Complexity' },
+  ],
   prim: [
     { name: 'Time', value: 90, label: 'O(ElogV)', full: 'Time Complexity' },
     { name: 'Space', value: 60, label: 'O(V)', full: 'Space Complexity' },
@@ -239,6 +266,7 @@ const comparisonData = [
   { name: 'BFS', time: 80, space: 60 },
   { name: 'DFS', time: 80, space: 60 },
   { name: 'Dijkstra', time: 95, space: 65 },
+  { name: 'Bellman', time: 90, space: 60 },
   { name: 'Floyd', time: 100, space: 90 },
   { name: 'MST', time: 90, space: 60 },
 ];
@@ -319,10 +347,11 @@ export default function GraphVisualizer({ algorithm = "bfs", startNode: initialS
     });
 
     const startNodeId = initialStartNode || (nodes.length > 0 ? nodes[0].id : null);
-    if (algorithm === "bfs") return bfsFrames(adj, startNodeId);
-    if (algorithm === "dfs") return dfsFrames(adj, startNodeId);
-    if (algorithm === "dijkstra") return dijkstraFrames(adj, startNodeId);
-    if (algorithm === "floyd-warshall") return floydWarshallFrames(nodes, edges);
+    if (algorithm === "bfs") return Array.from(bfsGenerator(adj, startNodeId));
+    if (algorithm === "dfs") return Array.from(dfsGenerator(adj, startNodeId));
+    if (algorithm === "dijkstra") return Array.from(dijkstraGenerator(adj, startNodeId));
+    if (algorithm === "bellman-ford") return Array.from(bellmanFordGenerator(nodes, edges, startNodeId));
+    if (algorithm === "floyd-warshall") return Array.from(floydWarshallGenerator(nodes, edges));
     if (algorithm === "prim") return primFrames(adj, startNodeId);
     if (algorithm === "kruskal") return kruskalFrames(nodes.map(n => n.id), edges);
     if (algorithm === "topological-sort") return topologicalSortFrames(adj, nodes.map(n => n.id));

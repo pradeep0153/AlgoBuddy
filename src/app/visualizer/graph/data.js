@@ -12,6 +12,7 @@ const baseRelatedLinks = [
   { key: "bfs", text: "BFS", url: "/visualizer/graph/bfs" },
   { key: "dfs", text: "DFS", url: "/visualizer/graph/dfs" },
   { key: "dijkstra", text: "Dijkstra", url: "/visualizer/graph/dijkstra" },
+  { key: "bellman-ford", text: "Bellman-Ford", url: "/visualizer/graph/bellman-ford" },
   {
     key: "floyd-warshall",
     text: "Floyd-Warshall",
