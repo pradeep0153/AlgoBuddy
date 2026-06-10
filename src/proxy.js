@@ -28,6 +28,8 @@ function getSupabaseConfig() {
   return { supabaseUrl, supabaseAnonKey };
 }
 
+const protectedRoutes = ["/arena", "/practice", "/dashboard", "/profile"];
+
 export async function proxy(request) {
   let supabaseResponse = NextResponse.next({ request });
 
@@ -36,6 +38,46 @@ export async function proxy(request) {
     if (process.env.NODE_ENV !== "production") {
       console.warn(SUPABASE_ENV_ERROR);
     }
+    return supabaseResponse;
+  }
+
+  const supabase = createServerClient(
+    supabaseConfig.supabaseUrl,
+    supabaseConfig.supabaseAnonKey,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value }) =>
+            request.cookies.set(name, value),
+          );
+          supabaseResponse = NextResponse.next({ request });
+          cookiesToSet.forEach(({ name, value, options }) =>
+            supabaseResponse.cookies.set(name, value, options),
+          );
+        },
+      },
+    },
+  );
+
+  // Calling getUser() triggers a token refresh if the access token is expired.
+  // This must not be removed — without it, sessions silently expire mid-browse.
+  const { data: { user }, error } = await supabase.auth.getUser();
+
+  // Route protection — redirect unauthenticated users away from protected routes
+  const pathname = request.nextUrl.pathname;
+  if (protectedRoutes.some((route) => pathname.startsWith(route))) {
+    if (error || !user) {
+      const url = new URL("/login", request.url);
+      url.searchParams.set("redirect", pathname);
+      return NextResponse.redirect(url);
+    }
+  }
+
+  return supabaseResponse;
+}
     return supabaseResponse;
   }
 
