@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { gsap } from "gsap";
 import ResetButton from "@/app/components/ui/resetButton";
 import GoButton from "@/app/components/ui/goButton";
@@ -40,6 +40,7 @@ const Animation = () => {
   const [bestResult, setBestResult] = useState(null);
   const [stepExplanation, setStepExplanation] = useState("");
 
+  const visualizerRef = useRef(null);
   const animationRef = useRef(null);
   const wasPausedRef = useRef(false);
   const stateQueueRef = useRef([]);
@@ -106,11 +107,6 @@ const Animation = () => {
     const state = stateQueueRef.current[currentStateIdxRef.current];
     const delay = 1500 / 1; // Replace speedRef.current with actual speed value
 
-  const link = document.createElement("a");
-  link.download = "sliding-window-visualization.png";
-  link.href = canvas.toDataURL("image/png");
-  link.click();
-};
 
     elementRefs.current.forEach((ref, index) => {
       if (!ref) return;
