@@ -11,6 +11,7 @@ import TutorialOverlay from "@/app/components/ui/TutorialOverlay";
 import BackToTop from "../components/ui/backtotop";
 import BookmarkSection from "@/app/components/ui/BookmarkSection";
 import KeyboardShortcuts from "@/app/components/KeyboardShortcuts";
+import AlgorithmNotes from "@/app/components/AlgorithmNotes";
 
 export const metadata = {
   title: "Algorithm Visualizer | AlgoBuddy",
@@ -785,6 +786,8 @@ const Visualizer = () => {
       <TutorialOverlay />
 
       <KeyboardShortcuts />
+
+      <AlgorithmNotes />
 
       <VisualizerClient initialSections={clientSections} />
 
