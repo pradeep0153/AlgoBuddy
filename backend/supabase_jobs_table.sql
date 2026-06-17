@@ -1,10 +1,11 @@
--- Create jobs table for student job listings
+-- Create jobs table for student job listings with full-text search support
 CREATE TABLE IF NOT EXISTS public.jobs (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     title TEXT NOT NULL,
     company TEXT NOT NULL,
     location TEXT,
     description TEXT NOT NULL,
+    skills TEXT,
     salary_range TEXT,
     job_type TEXT DEFAULT 'full-time',
     experience_level TEXT DEFAULT 'entry',
@@ -30,6 +31,6 @@ CREATE POLICY "Users can update their own jobs"
 ON public.jobs FOR UPDATE
 USING (auth.uid() = posted_by);
 
--- Index for pagination
+-- Index for pagination and search
 CREATE INDEX IF NOT EXISTS idx_jobs_status_created
 ON public.jobs (status, created_at DESC);

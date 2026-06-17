@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { toast } from "react-hot-toast";
 import {
-  Briefcase, MapPin, Calendar, ChevronLeft, ChevronRight,
-  Send, CheckCircle, X, Bookmark, BookmarkCheck
+  Briefcase, MapPin, Calendar, Search, ChevronLeft, ChevronRight, X,
+  Send, CheckCircle, Bookmark, BookmarkCheck
 } from "lucide-react";
 import Link from "next/link";
+import HighlightText from "@/app/components/ui/HighlightText";
 
 export default function StudentJobsPage() {
   const [jobs, setJobs] = useState([]);
@@ -14,16 +15,20 @@ export default function StudentJobsPage() {
   const [totalPages, setTotalPages] = useState(0);
   const [totalJobs, setTotalJobs] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchInput, setSearchInput] = useState("");
   const [appliedIds, setAppliedIds] = useState(new Set());
   const [bookmarkedIds, setBookmarkedIds] = useState(new Set());
   const [applying, setApplying] = useState(null);
   const [bookmarking, setBookmarking] = useState(null);
   const [confirmJob, setConfirmJob] = useState(null);
 
-  async function fetchJobs(page) {
+  const fetchJobs = useCallback(async (page, search) => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/student-jobs?page=${page}&limit=20`);
+      const params = new URLSearchParams({ page, limit: "20" });
+      if (search.trim()) params.set("search", search.trim());
+      const res = await fetch(`/api/student-jobs?${params}`);
       const data = await res.json();
       setJobs(data.jobs || []);
       setTotalPages(data.totalPages || 0);
@@ -34,7 +39,7 @@ export default function StudentJobsPage() {
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
 
   async function fetchApplications() {
     try {
@@ -48,7 +53,7 @@ export default function StudentJobsPage() {
 
   async function fetchBookmarks() {
     try {
-      const res = await fetch("/api/bookmarks?limit=200");
+      const res = await fetch("/api/job-bookmarks?limit=200");
       const data = await res.json();
       setBookmarkedIds(new Set(data.bookmarkedIds || []));
     } catch (err) {
@@ -57,15 +62,31 @@ export default function StudentJobsPage() {
   }
 
   useEffect(() => {
-    fetchJobs(currentPage);
+    fetchJobs(currentPage, searchQuery);
     fetchApplications();
     fetchBookmarks();
-  }, [currentPage]);
+  }, [currentPage, searchQuery, fetchJobs]);
+
+  function handleSearch(e) {
+    e.preventDefault();
+    setSearchQuery(searchInput);
+    setCurrentPage(1);
+  }
+
+  function handleClearSearch() {
+    setSearchInput("");
+    setSearchQuery("");
+    setCurrentPage(1);
+  }
+
+  function handlePageClick(page) {
+    setCurrentPage(page);
+  }
 
   async function handleToggleBookmark(jobId) {
     setBookmarking(jobId);
     try {
-      const res = await fetch("/api/bookmarks", {
+      const res = await fetch("/api/job-bookmarks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ jobId }),
@@ -126,10 +147,6 @@ export default function StudentJobsPage() {
     if (currentPage < totalPages) setCurrentPage((p) => p + 1);
   }
 
-  function handlePageClick(page) {
-    setCurrentPage(page);
-  }
-
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-4">
       <div className="max-w-4xl mx-auto">
@@ -151,6 +168,34 @@ export default function StudentJobsPage() {
           </Link>
         </div>
 
+        <form onSubmit={handleSearch} className="mb-6">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <input
+              type="text"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              placeholder="Search by title, company, skills, location, or keywords..."
+              className="w-full pl-10 pr-10 py-3 bg-white border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            />
+            {searchInput && (
+              <button
+                type="button"
+                onClick={handleClearSearch}
+                className="absolute right-12 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
+            <button
+              type="submit"
+              className="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
+            >
+              Search
+            </button>
+          </div>
+        </form>
+
         {loading ? (
           <div className="space-y-4">
             {[...Array(5)].map((_, i) => (
@@ -164,8 +209,22 @@ export default function StudentJobsPage() {
         ) : jobs.length === 0 ? (
           <div className="text-center py-20">
             <Briefcase className="mx-auto h-12 w-12 text-gray-400" />
-            <h2 className="mt-4 text-xl font-semibold text-gray-600">No jobs found</h2>
-            <p className="text-gray-500 mt-1">Check back later for new opportunities.</p>
+            <h2 className="mt-4 text-xl font-semibold text-gray-600">
+              {searchQuery ? "No matching jobs found" : "No jobs found"}
+            </h2>
+            <p className="text-gray-500 mt-1">
+              {searchQuery
+                ? "Try different keywords or clear your search."
+                : "Check back later for new opportunities."}
+            </p>
+            {searchQuery && (
+              <button
+                onClick={handleClearSearch}
+                className="mt-4 px-4 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition-colors"
+              >
+                Clear search
+              </button>
+            )}
           </div>
         ) : (
           <>
@@ -179,7 +238,9 @@ export default function StudentJobsPage() {
                     <div className="flex items-start justify-between">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <h2 className="text-xl font-semibold text-gray-900">{job.title}</h2>
+                          <h2 className="text-xl font-semibold text-gray-900">
+                            <HighlightText text={job.title} query={searchQuery} />
+                          </h2>
                           <button
                             onClick={() => handleToggleBookmark(job.id)}
                             disabled={isBookmarking}
@@ -193,12 +254,14 @@ export default function StudentJobsPage() {
                             )}
                           </button>
                         </div>
-                        <p className="text-indigo-600 font-medium mt-1">{job.company}</p>
+                        <p className="text-indigo-600 font-medium mt-1">
+                          <HighlightText text={job.company} query={searchQuery} />
+                        </p>
                         <div className="flex flex-wrap items-center gap-4 mt-3 text-sm text-gray-500">
                           {job.location && (
                             <span className="flex items-center gap-1">
                               <MapPin className="h-4 w-4" />
-                              {job.location}
+                              <HighlightText text={job.location} query={searchQuery} />
                             </span>
                           )}
                           {job.job_type && (
@@ -215,7 +278,15 @@ export default function StudentJobsPage() {
                         {job.salary_range && (
                           <p className="mt-2 text-sm font-medium text-green-600">{job.salary_range}</p>
                         )}
-                        <p className="mt-3 text-gray-600 line-clamp-3">{job.description}</p>
+                        {job.skills && (
+                          <p className="mt-2 text-sm text-gray-500">
+                            <span className="font-medium text-gray-700">Skills: </span>
+                            <HighlightText text={job.skills} query={searchQuery} />
+                          </p>
+                        )}
+                        <p className="mt-3 text-gray-600 line-clamp-3">
+                          <HighlightText text={job.description} query={searchQuery} />
+                        </p>
                       </div>
 
                       <div className="ml-6 flex-shrink-0 self-start">
