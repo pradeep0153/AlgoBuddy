@@ -139,6 +139,7 @@ export default async function RootLayout({ children }) {
         )}
       </head>
       <body className="bg-white text-[var(--udemy-text)] dark:bg-[var(--udemy-dark-bg)] dark:text-[var(--udemy-dark-text)]">
+        {/* <ThemeProvider attribute="class"> */}
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-[var(--color-primary)] focus:text-white focus:rounded-[var(--radius-md)]"
@@ -155,6 +156,7 @@ export default async function RootLayout({ children }) {
       <BackToTop />
       <VoiceAgent />
         <SpeedInsights />
+        {/* </ThemeProvider> */}
       </body>
     </html>
   );
