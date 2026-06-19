@@ -9,6 +9,11 @@ export default function Error({ error, reset }) {
       ? fallbackMessage
       : error?.message || fallbackMessage;
 
+  // Log error for external monitoring services
+  if (error) {
+    console.error("ErrorBoundary caught an error:", error);
+  }
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-white px-4 dark:bg-[var(--udemy-dark-bg)]">
       <div className="flex flex-col items-center gap-4 text-center">
