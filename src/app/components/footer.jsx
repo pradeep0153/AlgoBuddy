@@ -150,7 +150,7 @@ const Footer = () => {
 
                 <div className="flex overflow-hidden rounded-xl border border-white/10 bg-white/5 focus-within:border-primary/50 transition-colors w-full max-w-sm">
                   <input
-                    type="email"
+                    type="email" autoComplete="email"
                     placeholder="Enter your email"
                     value={newsletterEmail}
                     disabled={isSubmitting}

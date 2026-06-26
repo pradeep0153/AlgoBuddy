@@ -175,7 +175,7 @@ export default function AuthForm({ isLogin = true }) {
                   <Mail size={18} className="text-gray-400 dark:text-gray-500" />
                 </div>
                 <input
-                  type="email"
+                  type="email" autoComplete="email"
                   aria-label="Email address"
                   disabled={loading}
                   className="w-full pl-10 pr-4 py-3 rounded-lg border border-udemy-border dark:border-udemy-dark-border focus:outline-none focus:ring-2 focus:ring-udemy-purple bg-white dark:bg-udemy-dark-surface text-udemy-text dark:text-udemy-dark-text"
@@ -199,7 +199,7 @@ export default function AuthForm({ isLogin = true }) {
                 <Lock size={18} className="text-gray-400 dark:text-gray-500" />
               </div>
               <input
-                type="password"
+                type="password" autoComplete="current-password"
                 aria-label="Password"
                 disabled={loading}
                 className="w-full pl-10 pr-4 py-3 rounded-lg border border-udemy-border dark:border-udemy-dark-border focus:outline-none focus:ring-2 focus:ring-udemy-purple bg-white dark:bg-udemy-dark-surface text-udemy-text dark:text-udemy-dark-text"

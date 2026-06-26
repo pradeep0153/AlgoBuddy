@@ -208,7 +208,7 @@ const ContactSupportPopup = () => {
                               Email Address
                             </label>
                             <input
-                              type="email"
+                              type="email" autoComplete="email"
                               id="email"
                               name="email"
                               value={formData.email}

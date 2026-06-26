@@ -164,7 +164,7 @@ const TestimonialsSection = () => {
                       Your Email *
                     </label>
                     <input
-                      type="email"
+                      type="email" autoComplete="email"
                       id="email"
                       name="email"
                       placeholder="john@example.com"

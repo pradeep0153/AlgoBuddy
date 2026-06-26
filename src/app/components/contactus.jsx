@@ -272,7 +272,7 @@ const ContactUs = () => {
                       Email Address
                     </label>
                     <input
-                      type="email"
+                      type="email" autoComplete="email"
                       name="email"
                       required
                       value={formData.email}
