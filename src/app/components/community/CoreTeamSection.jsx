@@ -142,7 +142,7 @@ export default function CoreTeamSection() {
                   <a
                     key={platform}
                     href={url}
-                    target="_blank"
+                    target="_blank" rel="noopener noreferrer"
                     rel="noopener noreferrer"
                     className={`text-slate-400 dark:text-slate-500 transition-colors duration-150 ${hoverColor}`}
                   >

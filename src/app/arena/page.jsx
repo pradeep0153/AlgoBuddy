@@ -623,7 +623,7 @@ export default function ArenaPage() {
                           
                           <a
                             href={todaysChallenge.practiceUrl}
-                            target="_blank"
+                            target="_blank" rel="noopener noreferrer"
                             rel="noopener noreferrer"
                             className="w-full py-2.5 bg-primary hover:bg-primary-dark text-white rounded-xl text-xs font-bold text-center transition block shadow-md shadow-primary/10"
                           >

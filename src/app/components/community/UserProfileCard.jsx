@@ -69,7 +69,7 @@ export default function UserProfileCard() {
             {/* GitHub */}
             <a
               href="https://github.com/PankajSingh34"
-              target="_blank"
+              target="_blank" rel="noopener noreferrer"
               rel="noopener noreferrer"
               className="flex items-start gap-3 group"
             >
@@ -85,7 +85,7 @@ export default function UserProfileCard() {
             {/* LinkedIn */}
             <a
               href="https://www.linkedin.com/in/pankaj-singh-2a968b212"
-              target="_blank"
+              target="_blank" rel="noopener noreferrer"
               rel="noopener noreferrer"
               className="flex items-start gap-3 group"
             >
@@ -101,7 +101,7 @@ export default function UserProfileCard() {
             {/* Twitter */}
             <a
               href="https://twitter.com/pankajcodes"
-              target="_blank"
+              target="_blank" rel="noopener noreferrer"
               rel="noopener noreferrer"
               className="flex items-start gap-3 group"
             >
@@ -117,7 +117,7 @@ export default function UserProfileCard() {
             {/* Dev.to */}
             <a
               href="https://dev.to/pankajsingh"
-              target="_blank"
+              target="_blank" rel="noopener noreferrer"
               rel="noopener noreferrer"
               className="flex items-start gap-3 group"
             >

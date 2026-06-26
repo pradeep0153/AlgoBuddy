@@ -424,7 +424,7 @@ export default function DashboardClient() {
                             {meta?.practiceUrl && (
                               <a
                                 href={meta.practiceUrl}
-                                target="_blank"
+                                target="_blank" rel="noopener noreferrer"
                                 rel="noreferrer"
                                 className="inline-flex items-center gap-1.5 rounded-full border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-primary hover:text-primary focus-ring dark:border-neutral-700 dark:bg-neutral-900 dark:text-slate-200"
                               >

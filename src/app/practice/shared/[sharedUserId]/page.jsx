@@ -258,7 +258,7 @@ export default function SharedSheetPage() {
                           <td className="py-4 px-5">
                             <a
                               href={prob.practiceUrl}
-                              target="_blank"
+                              target="_blank" rel="noopener noreferrer"
                               rel="noopener noreferrer"
                               className="font-bold text-xs text-slate-800 dark:text-white hover:text-primary dark:hover:text-purple-400 hover:underline inline-flex items-center gap-1 transition"
                             >

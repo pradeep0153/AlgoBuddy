@@ -237,7 +237,7 @@ const mdComponents = {
   a: ({ href, children }) => (
     <a
       href={href}
-      target="_blank"
+      target="_blank" rel="noopener noreferrer"
       rel="noopener noreferrer"
       className="text-primary dark:text-purple-400 hover:text-primary-dark dark:hover:text-purple-300 underline underline-offset-2 inline-flex items-center gap-0.5"
     >
@@ -744,7 +744,7 @@ export default function Chatbot() {
                 </p>
                 <a
                   href="https://www.algobuddy.me"
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer"
                   rel="noopener noreferrer"
                   className="text-[10px] text-primary dark:text-purple-400 hover:opacity-85 transition-opacity flex items-center gap-0.5"
                 >

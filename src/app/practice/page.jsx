@@ -503,7 +503,7 @@ export default function PracticePage() {
                                   </button>
                                   <a
                                     href={prob.practiceUrl}
-                                    target="_blank"
+                                    target="_blank" rel="noopener noreferrer"
                                     rel="noopener noreferrer"
                                     className="text-[10px] font-bold px-2 py-1 bg-primary text-white rounded-lg hover:bg-primary-dark transition"
                                   >
@@ -659,7 +659,7 @@ export default function PracticePage() {
                                 <td className="py-4 px-5">
                                   <a
                                     href={prob.practiceUrl}
-                                    target="_blank"
+                                    target="_blank" rel="noopener noreferrer"
                                     rel="noopener noreferrer"
                                     className="font-bold text-xs text-slate-800 dark:text-white hover:text-primary dark:hover:text-purple-400 hover:underline inline-flex items-center gap-1 transition"
                                   >
@@ -1077,7 +1077,7 @@ export default function PracticePage() {
 
                                         <a
                                           href={item.practiceUrl}
-                                          target="_blank"
+                                          target="_blank" rel="noopener noreferrer"
                                           rel="noopener noreferrer"
                                           className="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1.5 bg-primary text-white hover:bg-primary-dark rounded-lg transition shadow-sm"
                                         >

@@ -305,7 +305,7 @@ export default function TopicPracticeSheet() {
                           <td className="py-4 px-6 text-center">
                             <a
                               href={item.practiceUrl}
-                              target="_blank"
+                              target="_blank" rel="noopener noreferrer"
                               rel="noopener noreferrer"
                               className="inline-flex items-center gap-1 text-xs font-bold text-surface-600 dark:text-surface-300 hover:text-[#ffa116] hover:scale-105 transition-all duration-250"
                             >

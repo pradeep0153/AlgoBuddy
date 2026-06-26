@@ -7,7 +7,7 @@ const ProductHuntBadge = () => {
     <a
       className="border dark:border-white border-black rounded-xl inline-block overflow-hidden"
       href="https://www.producthunt.com/products/dsa-visualizer?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-dsa&#0045;visualizer"
-      target="_blank"
+      target="_blank" rel="noopener noreferrer"
       rel="noopener noreferrer"
       style={{ width: 250, height: 54 }}
     >

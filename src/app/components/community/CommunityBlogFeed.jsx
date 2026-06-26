@@ -151,7 +151,7 @@ export default function CommunityBlogFeed({ loading = false }) {
           
           <a
             href="https://discord.gg/PqnazRxPc"
-            target="_blank"
+            target="_blank" rel="noopener noreferrer"
             rel="noopener noreferrer"
             aria-label="Write a blog post on Discord"
             className="btn-base bg-[var(--udemy-purple)] text-white hover:bg-[var(--udemy-purple-dark)]"

@@ -185,7 +185,7 @@ const ContactUs = () => {
                   <div className="flex items-center gap-4">
                     <a
                       href="https://github.com/PankajSingh34/AlgoBuddy"
-                      target="_blank"
+                      target="_blank" rel="noopener noreferrer"
                       rel="noopener noreferrer"
                       className="w-14 h-14 rounded-2xl border border-udemy-border dark:border-udemy-dark-border flex items-center justify-center text-udemy-muted dark:text-udemy-dark-muted hover:text-white hover:border-primary hover:bg-primary/10 transition-all duration-300"
                     >
@@ -193,7 +193,7 @@ const ContactUs = () => {
                     </a>
                     <a
                       href="https://www.linkedin.com/in/pankaj-singh-2a968b212/"
-                      target="_blank"
+                      target="_blank" rel="noopener noreferrer"
                       rel="noopener noreferrer"
                       className="w-14 h-14 rounded-2xl border border-udemy-border dark:border-udemy-dark-border flex items-center justify-center text-udemy-muted dark:text-udemy-dark-muted  hover:text-white hover:border-primary hover:bg-primary/10 transition-all duration-300"
                     >

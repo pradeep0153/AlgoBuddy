@@ -94,7 +94,7 @@ const Footer = () => {
               <div className="flex items-center gap-3 mt-8">
                 <a
                   href="https://github.com/PankajSingh34/AlgoBuddy"
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer"
                   rel="noopener noreferrer"
                   className={socialIcon}
                   aria-label="GitHub"
@@ -104,7 +104,7 @@ const Footer = () => {
 
                 <a
                   href="https://www.linkedin.com/company/algobuddy"
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer"
                   rel="noopener noreferrer"
                   className={socialIcon}
                   aria-label="LinkedIn"
@@ -122,7 +122,7 @@ const Footer = () => {
 
                 <a
                   href="https://www.instagram.com/algobuddy.connect/"
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer"
                   rel="noopener noreferrer"
                   className={socialIcon}
                   aria-label="Instagram"
@@ -132,7 +132,7 @@ const Footer = () => {
 
                 <a
                   href="https://discord.gg/PqnazRxPc"
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer"
                   rel="noopener noreferrer"
                   className={socialIcon}
                   aria-label="Join AlgoBuddy Discord Community"
@@ -239,7 +239,7 @@ const Footer = () => {
               <div className="space-y-4">
                 <a
                   href="https://discord.gg/PqnazRxPc"
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors duration-300 text-sm"
                 >
@@ -247,7 +247,7 @@ const Footer = () => {
                 </a>
                 <a
                   href="https://github.com/PankajSingh34/AlgoBuddy"
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors duration-300 text-sm"
                 >
@@ -255,7 +255,7 @@ const Footer = () => {
                 </a>
                 <a
                   href="https://www.youtube.com/@AlgoBuddy.connect"
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors duration-300 text-sm"
                 >
@@ -263,7 +263,7 @@ const Footer = () => {
                 </a>
                 <a
                   href="https://www.instagram.com/algobuddy.connect/"
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors duration-300 text-sm"
                 >
@@ -271,7 +271,7 @@ const Footer = () => {
                 </a>
                 <a
                   href="https://x.com/AlgoBuddy_"
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors duration-300 text-sm"
                 >
