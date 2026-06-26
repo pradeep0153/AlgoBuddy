@@ -231,9 +231,7 @@ export function CommandPalette() {
           >
             ESC
           </kbd>
-          <button
-            type="button"
-            onClick={() => setIsOpen(false)}
+          <button type="button" aria-label="Action" onClick={() => setIsOpen(false)}
             aria-label="Close search"
             className="sm:hidden p-1 rounded text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#a435f0]"
           >

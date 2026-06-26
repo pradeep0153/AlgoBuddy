@@ -227,9 +227,7 @@ export default function CodeEstimator() {
           </div>
 
           {/* Action Trigger Button */}
-          <button
-            type="button"
-            onClick={handleAnalyze}
+          <button type="button" aria-label="Action" onClick={handleAnalyze}
             disabled={loading}
             className={`w-full py-3.5 rounded-2xl text-sm font-bold text-white shadow-md flex items-center justify-center gap-2 transition-all active:scale-[0.98] ${
               loading 
@@ -413,9 +411,7 @@ export default function CodeEstimator() {
                   </button>
                 </div>
                 
-                <button
-                  type="button"
-                  onClick={() => copyToClipboard(showOriginalTab ? code : result.optimizedCode)}
+                <button type="button" aria-label="Action" onClick={() => copyToClipboard(showOriginalTab ? code : result.optimizedCode)}
                   className="p-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-200/50 dark:hover:bg-neutral-850 text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-200 transition"
                   title="Copy code"
                 >

@@ -390,9 +390,7 @@ export default function Navbar() {
           </div>
 
           <div className="px-6 py-4 border-t border-surface-200 dark:border-surface-700">
-            <button
-              type="button"
-              onClick={toggleTheme}
+            <button type="button" aria-label="Action" onClick={toggleTheme}
               className="mb-3 h-[44px] w-full flex items-center justify-center gap-2 text-[15px] font-semibold text-surface-900 dark:text-white border border-surface-300 dark:border-udemy-dark-border rounded-full hover:border-primary hover:text-primary transition-all focus-ring"
               aria-label={
                 themeMounted

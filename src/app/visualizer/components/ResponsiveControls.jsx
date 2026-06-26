@@ -27,9 +27,7 @@ export function ResponsiveControls({ children, defaultExpanded = true }) {
   return (
     <div className="lg:static fixed bottom-0 left-0 right-0 z-40 lg:z-auto">
       {/* Toggle button — only visible on mobile / tablet */}
-      <button
-        type="button"
-        onClick={() => setIsExpanded((prev) => !prev)}
+      <button type="button" aria-label="Action" onClick={() => setIsExpanded((prev) => !prev)}
         aria-expanded={isExpanded}
         aria-controls="mobile-visualizer-controls"
         className="

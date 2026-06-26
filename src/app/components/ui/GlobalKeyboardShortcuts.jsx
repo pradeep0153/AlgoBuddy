@@ -118,9 +118,7 @@ export default function GlobalKeyboardShortcuts() {
               Keyboard shortcuts
             </h2>
           </div>
-          <button
-            type="button"
-            onClick={() => setOpen(false)}
+          <button type="button" aria-label="Action" onClick={() => setOpen(false)}
             className="rounded-full p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 focus-ring dark:text-neutral-400 dark:hover:bg-neutral-900 dark:hover:text-neutral-100"
             aria-label="Close keyboard shortcuts"
           >

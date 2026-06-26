@@ -33,9 +33,7 @@ export default function KeyboardShortcutsLegend() {
   return (
     <div ref={containerRef} className="relative inline-block">
       {/* Trigger */}
-      <button
-        type="button"
-        onClick={() => setOpen((p) => !p)}
+      <button type="button" aria-label="Action" onClick={() => setOpen((p) => !p)}
         aria-expanded={open}
         aria-label="Keyboard shortcuts"
         title="Keyboard shortcuts"

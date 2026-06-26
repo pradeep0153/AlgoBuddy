@@ -269,9 +269,7 @@ export default function DashboardClient() {
               </p>
             </div>
             {resourceBookmarks.length > 0 && (
-              <button
-                type="button"
-                onClick={clearBookmarks}
+              <button type="button" aria-label="Action" onClick={clearBookmarks}
                 className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-600 transition hover:border-red-300 hover:text-red-500 focus-ring dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400"
               >
                 <Trash2 className="h-4 w-4" />
@@ -324,9 +322,7 @@ export default function DashboardClient() {
                           >
                             <ExternalLink className="h-4 w-4" />
                           </Link>
-                          <button
-                            type="button"
-                            onClick={() => removeBookmark(item.path)}
+                          <button type="button" aria-label="Action" onClick={() => removeBookmark(item.path)}
                             className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 text-slate-500 transition hover:border-red-300 hover:text-red-500 focus-ring dark:border-neutral-700 dark:text-neutral-400"
                             aria-label={`Remove ${item.name} from bookmarks`}
                           >
@@ -399,9 +395,7 @@ export default function DashboardClient() {
                                 {meta?.difficulty || "Saved problem"}
                               </div>
                             </div>
-                            <button
-                              type="button"
-                              onClick={() =>
+                            <button type="button" aria-label="Action" onClick={() =>
                                 meta && toggleBookmark(item.id, item.topicSlug)
                               }
                               className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 text-slate-500 transition hover:border-red-300 hover:text-red-500 focus-ring dark:border-neutral-700 dark:text-neutral-400"

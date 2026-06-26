@@ -179,9 +179,7 @@ export default function StudentJobsPage() {
               className="w-full pl-10 pr-10 py-3 bg-white border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
             />
             {searchInput && (
-              <button
-                type="button"
-                onClick={handleClearSearch}
+              <button type="button" aria-label="Action" onClick={handleClearSearch}
                 className="absolute right-12 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
               >
                 <X className="h-4 w-4" />

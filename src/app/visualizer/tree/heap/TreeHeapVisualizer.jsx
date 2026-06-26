@@ -204,17 +204,13 @@ export default function TreeHeapVisualizer({ initialHeapType = "min" }) {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => resetHeap(true)}
+            <button type="button" aria-label="Action" onClick={() => resetHeap(true)}
               aria-pressed={isMinHeap}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${isMinHeap ? "bg-indigo-600 text-white border-indigo-500" : "bg-gray-100 dark:bg-slate-800 text-slate-900 dark:text-slate-200 border-gray-300 dark:border-slate-600"}`}
             >
               Min-Heap
             </button>
-            <button
-              type="button"
-              onClick={() => resetHeap(false)}
+            <button type="button" aria-label="Action" onClick={() => resetHeap(false)}
               aria-pressed={!isMinHeap}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${!isMinHeap ? "bg-indigo-600 text-white border-indigo-500" : "bg-gray-100 dark:bg-slate-800 text-slate-900 dark:text-slate-200 border-gray-300 dark:border-slate-600"}`}
             >
@@ -235,17 +231,13 @@ export default function TreeHeapVisualizer({ initialHeapType = "min" }) {
                 className="w-full sm:w-36 px-3 py-2 text-xs bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#333] rounded-xl text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors"
                 onKeyDown={(e) => e.key === "Enter" && handleInsert()}
               />
-              <button
-                type="button"
-                onClick={handleInsert}
+              <button type="button" aria-label="Action" onClick={handleInsert}
                 disabled={engine.isPlaying}
                 className="px-4 py-2 text-xs font-bold bg-indigo-600 hover:bg-indigo-500 disabled:bg-indigo-900 disabled:opacity-40 text-white rounded-xl transition-all"
               >
                 Insert
               </button>
-              <button
-                type="button"
-                onClick={handleExtract}
+              <button type="button" aria-label="Action" onClick={handleExtract}
                 disabled={engine.isPlaying || heapArray.length <= 1}
                 className="px-4 py-2 text-xs font-bold bg-white dark:bg-[#1a1a1a] hover:bg-gray-50 dark:hover:bg-[#2a2a2a] text-slate-900 dark:text-slate-200 rounded-xl transition-all border border-gray-200 dark:border-[#333] disabled:opacity-40 disabled:cursor-not-allowed"
               >
@@ -262,9 +254,7 @@ export default function TreeHeapVisualizer({ initialHeapType = "min" }) {
                 disabled={engine.isPlaying}
                 className="w-full sm:w-72 px-3 py-2 text-xs bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#333] rounded-xl text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors"
               />
-              <button
-                type="button"
-                onClick={handleBuild}
+              <button type="button" aria-label="Action" onClick={handleBuild}
                 disabled={engine.isPlaying}
                 className="px-4 py-2 text-xs font-bold bg-gray-900 hover:bg-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600 text-white rounded-xl transition-all border border-gray-800 dark:border-slate-600 disabled:opacity-40"
               >

@@ -30,9 +30,7 @@ export default function PlaybackControls({
       {showPlayPause && (
         <div className="flex items-center gap-2 w-full sm:w-auto justify-center bg-slate-950/70 p-1.5 rounded-full border border-slate-800/80 shadow-inner">
           {onStepBackward && (
-            <button
-              type="button"
-              onClick={onStepBackward}
+            <button type="button" aria-label="Action" onClick={onStepBackward}
               disabled={disabled}
               className="p-2 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               title="Previous Step"
@@ -41,9 +39,7 @@ export default function PlaybackControls({
             </button>
           )}
 
-          <button
-            type="button"
-            onClick={handlePlayPause}
+          <button type="button" aria-label="Action" onClick={handlePlayPause}
             disabled={disabled}
             className="flex items-center justify-center bg-[#a435f0] text-white w-10 h-10 rounded-full hover:bg-[#8f2cd6] transition-all shadow-md shadow-[#a435f0]/30 disabled:opacity-50 disabled:cursor-not-allowed"
             title={isPlaying ? "Pause" : "Play"}
@@ -52,9 +48,7 @@ export default function PlaybackControls({
           </button>
 
           {onStepForward && (
-            <button
-              type="button"
-              onClick={onStepForward}
+            <button type="button" aria-label="Action" onClick={onStepForward}
               disabled={disabled}
               className="p-2 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               title="Next Step"
@@ -64,9 +58,7 @@ export default function PlaybackControls({
           )}
 
           {onReset && (
-            <button
-              type="button"
-              onClick={onReset}
+            <button type="button" aria-label="Action" onClick={onReset}
               disabled={disabled}
               className="p-2 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed ml-1"
               title="Reset"
@@ -79,9 +71,7 @@ export default function PlaybackControls({
 
       {/* Clear Button */}
       {onClear && (
-        <button
-          type="button"
-          onClick={onClear}
+        <button type="button" aria-label="Action" onClick={onClear}
           disabled={disabled}
           className="px-3.5 py-2 text-xs font-bold text-rose-500 bg-rose-950/20 hover:bg-rose-950/40 rounded-xl transition-all border border-rose-900/30 flex items-center gap-1.5 w-full sm:w-auto justify-center"
         >
@@ -91,9 +81,7 @@ export default function PlaybackControls({
 
       {/* Explain Step Button */}
       {onExplainStep && (
-        <button
-          type="button"
-          onClick={onExplainStep}
+        <button type="button" aria-label="Action" onClick={onExplainStep}
           disabled={disabled}
           className="px-3.5 py-2 text-xs font-bold text-[#c084fc] bg-[#3b0764]/40 hover:bg-[#3b0764]/70 rounded-xl transition-all border border-[#c084fc]/30 flex items-center gap-1.5 w-full sm:w-auto justify-center shadow-md shadow-[#a435f0]/10"
         >

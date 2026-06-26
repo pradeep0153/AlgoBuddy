@@ -298,9 +298,7 @@ const PrivacyPolicyModal = ({ isOpen, onClose }) => {
                   <ul className="space-y-1.5">
                     {policySections.map((item) => (
                       <li key={item.id}>
-                        <button
-                          type="button"
-                          onClick={() => scrollToSection(item.id)}
+                        <button type="button" aria-label="Action" onClick={() => scrollToSection(item.id)}
                           aria-current={
                             activeSection === item.id ? "location" : undefined
                           }

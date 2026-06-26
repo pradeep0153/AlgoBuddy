@@ -230,9 +230,7 @@ const AStarAnimation = () => {
                 </button>
               );
             })}
-            <button
-              type="button"
-              onClick={() => setWalls(new Set())}
+            <button type="button" aria-label="Action" onClick={() => setWalls(new Set())}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-semibold bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 transition-colors"
               disabled={engine.isPlaying}
             >

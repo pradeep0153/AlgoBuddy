@@ -203,9 +203,7 @@ export default function GraphAnimation({ type = "bfs", title = "Graph" }) {
           )}
           {/* Directed / Undirected toggle — hidden for prim/kruskal */}
           {!UNDIRECTED_ONLY.includes(type) && (
-            <button
-              type="button"
-              onClick={canToggleDirected ? handleToggleDirected : undefined}
+            <button type="button" aria-label="Action" onClick={canToggleDirected ? handleToggleDirected : undefined}
               title={
                 forceDirected
                   ? "This algorithm requires a directed graph"
@@ -222,9 +220,7 @@ export default function GraphAnimation({ type = "bfs", title = "Graph" }) {
           )}
 
           {/* Weighted / Unweighted toggle — locked ON for dijkstra/prim/kruskal */}
-          <button
-            type="button"
-            onClick={canToggleWeighted ? handleToggleWeighted : undefined}
+          <button type="button" aria-label="Action" onClick={canToggleWeighted ? handleToggleWeighted : undefined}
             title={
               forceWeighted
                 ? "This algorithm requires a weighted graph"
@@ -239,17 +235,13 @@ export default function GraphAnimation({ type = "bfs", title = "Graph" }) {
             {isWeighted ? "Weighted" : "Unweighted"}
           </button>
 
-          <button
-            type="button"
-            onClick={advance}
+          <button type="button" aria-label="Action" onClick={advance}
             className="btn-base bg-primary text-white hover:bg-primary-dark touch-manipulation min-h-[44px] min-w-[44px]"
           >
             <Play className="h-4 w-4" aria-hidden="true" />
             Next step
           </button>
-          <button
-            type="button"
-            onClick={reset}
+          <button type="button" aria-label="Action" onClick={reset}
             className="btn-base border border-surface-300 text-surface-800 hover:border-primary hover:text-primary dark:border-surface-700 dark:text-surface-200 touch-manipulation min-h-[44px] min-w-[44px]"
           >
             <RotateCcw className="h-4 w-4" aria-hidden="true" />

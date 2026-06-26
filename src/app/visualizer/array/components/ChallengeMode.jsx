@@ -138,9 +138,7 @@ export default function ChallengeModePanel({
           <span className="rounded bg-white px-2 py-1 dark:bg-neutral-900">
             Accuracy: {accuracy}%
           </span>
-          <button
-            type="button"
-            onClick={onResetStats}
+          <button type="button" aria-label="Action" onClick={onResetStats}
             className="rounded border border-[#a435f0] px-2 py-1 text-[#a435f0] transition-colors hover:bg-purple-100 dark:hover:bg-purple-900/40"
           >
             Reset Score

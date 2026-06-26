@@ -271,9 +271,7 @@ const MCTSAnim = () => {
                         </p>
                       </div>
 
-                      <button
-                        type="button"
-                        onClick={() => replaySession(session)}
+                      <button type="button" aria-label="Action" onClick={() => replaySession(session)}
                         className="px-3 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
                       >
                         Replay

@@ -552,9 +552,7 @@ export default function DryRunClient() {
                 <p className="text-xs text-slate-500 dark:text-slate-400">{LANGUAGE_HINTS[language]}</p>
               </div>
             </div>
-            <button
-              type="button"
-              onClick={() => setSource(SAMPLES[language])}
+            <button type="button" aria-label="Action" onClick={() => setSource(SAMPLES[language])}
               className="inline-flex items-center gap-2 rounded-md border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-700 transition hover:border-violet-300 hover:text-violet-700 dark:border-slate-700 dark:text-slate-200"
             >
               <RotateCcw className="h-4 w-4" />
@@ -603,26 +601,20 @@ export default function DryRunClient() {
                 </p>
               </div>
               <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => setStep((value) => Math.max(0, value - 1))}
+                <button type="button" aria-label="Action" onClick={() => setStep((value) => Math.max(0, value - 1))}
                   className="rounded-lg border border-slate-200 p-2 text-slate-700 transition hover:border-violet-300 hover:text-violet-700 disabled:opacity-40 dark:border-slate-700 dark:text-slate-200"
                   disabled={step === 0}
                   aria-label="Previous step"
                 >
                   <ChevronLeft className="h-5 w-5" />
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setPlaying((value) => !value)}
+                <button type="button" aria-label="Action" onClick={() => setPlaying((value) => !value)}
                   className="rounded-lg bg-violet-600 p-2 text-white transition hover:bg-violet-700"
                   aria-label={playing ? "Pause dry run" : "Play dry run"}
                 >
                   {playing ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setStep((value) => Math.min(trace.length - 1, value + 1))}
+                <button type="button" aria-label="Action" onClick={() => setStep((value) => Math.min(trace.length - 1, value + 1))}
                   className="rounded-lg border border-slate-200 p-2 text-slate-700 transition hover:border-violet-300 hover:text-violet-700 disabled:opacity-40 dark:border-slate-700 dark:text-slate-200"
                   disabled={step >= trace.length - 1}
                   aria-label="Next step"

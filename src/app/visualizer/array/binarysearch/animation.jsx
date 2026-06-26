@@ -184,9 +184,7 @@ const BinarySearch = () => {
               placeholder="e.g., 1, 3, 4, 6, 8"
               disabled={isAnimating}
             />
-            <button
-              type="button"
-              onClick={generateRandomArray}
+            <button type="button" aria-label="Action" onClick={generateRandomArray}
               className="px-4 py-2 font-bold bg-[#a435f0] text-white rounded-lg hover:bg-[#8f2cd6] transition-all duration-200"
               disabled={isAnimating}
             >

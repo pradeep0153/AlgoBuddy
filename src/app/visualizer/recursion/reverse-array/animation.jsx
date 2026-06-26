@@ -148,9 +148,7 @@ const ReverseArrayAnimation = () => {
                 placeholder="e.g. 1, 2, 3, 4"
                 disabled={isVisualizing}
               />
-              <button
-                type="button"
-                onClick={generateRandomArray}
+              <button type="button" aria-label="Action" onClick={generateRandomArray}
                 className="px-4 py-2 font-bold bg-[#0d9488] text-white rounded-lg hover:bg-[#0b766e] transition-all duration-200"
                 disabled={isVisualizing}
               >
